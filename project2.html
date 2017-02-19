@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <title>Hangmanonfire</title>
+</head>
+
+<body>
+    <div class="container ">
+        <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
+            <a id="home" class="navbar-brand" href="#">Hangmanonfire</a>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" id="newGame" href="#">New Game?</a>
+                </li>
+            </ul>
+        </nav>
+        <div id="welcome">
+            <br>
+            <br>
+            <br>
+            <div class="row ">
+                <div class="col-xl-6 offset-3">
+                    <h1>Welcome to Hangmanonfire</h1>
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="row ">
+                <div class="col-xl-2 offset-3"></div>
+                <button id="startGame" type="button" class="btn btn bg-inverse"> <span style="color:white">Start Game</span></button>
+            </div>
+        </div>
+        <div id="game" style="display: none;">
+            <br>
+            <br>
+
+            <div class="row">
+                <div class="col-xl-5 offset-1">
+                    <h1>Take a guess</h1>
+                    <h2 id="word">Word: </h2>
+                </div>
+                <div id="letterContainer" class="col-xl-5">
+            <br>
+                	
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+</body>
+<script type="text/javascript" src="./dictionary.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    //do jQuery
+    const WORD = randomWord();
+    console.log(WORD);
+    // when you click home it should return you back to when you load the page
+    $("#home").click(function() {
+        $(".game").hide();
+        $("#welcome").show();
+    });
+    // when you click start game it should start the game
+    $("#startGame").click(function() {
+        $("#welcome").hide();
+        $("#game").show();
+        // display all the underscores
+        for (var i = 0; i < WORD.length; i++) {
+            $("#word").append('<span class="' + WORD[i] + '" >' + "_ " + '</span>');
+        }
+        //show all the little letters to click on.
+        for (var i = 97; i <=122; i++) {
+        	let letter = String.fromCharCode(i);
+       		$("#letterContainer").append( '<span class="badge badge-default " style="background-color: black" >' +"&nbsp; "+ letter +" &nbsp;"+ '</span> ');
+        }
+        // maybe add stuff so that its graphically nice
+        // idk prolly not
+    });
+
+});
+</script>
+
+</html>
