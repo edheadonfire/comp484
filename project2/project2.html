@@ -76,7 +76,7 @@ $(document).ready(function() {
         //show all the little letters to click on.
         for (var i = 97; i <=122; i++) {
         	let letter = String.fromCharCode(i);
-       		$("#letterContainer").append( '<span '+ 'id="'+letter + '" class="badge badge-default " style="background-color: black" >' +"&nbsp; "+ letter +" &nbsp;"+ '</span> ');
+       		$("#letterContainer").append( '<span '+ 'id="'+letter + '" class="badge badge-default " style="background-color: black" style="position: absolute">' +"&nbsp; "+ letter +" &nbsp;"+ '</span> ');
         }
         // maybe add stuff so that its graphically nice
         // idk prolly not
@@ -90,7 +90,7 @@ $(document).ready(function() {
 
             }
             
-            $(this).hide();
+            $(this).css('visibility','hidden');
         })
     });
 
