@@ -82,10 +82,16 @@ $(document).ready(function() {
         var correctArray = [];
         var misses = 0;
     reset();
+        for (var i = 97; i <= 122; i++) {
+
+            let letter = String.fromCharCode(i);
+            
+            $("#letterContainer").append('<span ' + 'id="' + letter + '" class="badge badge-default gameOver" style="background-color: black" style="position: absolute">' + "&nbsp; " + letter + " &nbsp;" + '</span> ');
+        }
     
     function reset() {
-        $(".reset").remove();
-        $(".gameOver").hide(); 
+        $(".reset").remove(); 
+        $(".gameOver").css('visibility', 'visible');
         $(".mesigi").remove();
         $(".deadman").hide();
         correctArray = [];
@@ -102,12 +108,6 @@ $(document).ready(function() {
             $("#word").append('<span class="' + worded[i] + ' reset" >' + "_ " + '</span>');
         }
         //show all the little letters to click on.
-        for (var i = 97; i <= 122; i++) {
-
-            let letter = String.fromCharCode(i);
-            
-            $("#letterContainer").append('<span ' + 'id="' + letter + '" class="badge badge-default gameOver" style="background-color: black" style="position: absolute">' + "&nbsp; " + letter + " &nbsp;" + '</span> ');
-        }
 
 
     }
@@ -176,12 +176,12 @@ $(document).ready(function() {
     });
 
     function lose() {
-        $(".gameOver").remove();
+        $(".gameOver").css('visibility', 'hidden');
         $("#winlose").append(' <h1 class="mesigi" > YOU LOSE  the word was:  '+ worded + "<br>" + 'press reset to play again </h1>');
     };
 
     function win() {
-        $(".gameOver").remove();
+        $(".gameOver").css('visibility', 'hidden');
         $("#winlose").append('<h1 class="mesigi" > YOU WIN  Press reset to play again  </h1>');
     };
 
