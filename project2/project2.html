@@ -59,9 +59,11 @@
 $(document).ready(function() {
     var misses = 0;
     const WORD = randomWord();
+    var numNeededToWin = 0;
+    var correctArray = [];
     console.log(WORD);
     // when you click home it should return you back to when you load the page
-    
+
     // when you click start game it should start the game
     $("#startGame").click(function() {
         $("#welcome").hide();
@@ -75,7 +77,10 @@ $(document).ready(function() {
         for (var i = 97; i <= 122; i++) {
             let letter = String.fromCharCode(i);
             $("#letterContainer").append('<span ' + 'id="' + letter + '" class="badge badge-default " style="background-color: black" style="position: absolute">' + "&nbsp; " + letter + " &nbsp;" + '</span> ');
+
+
         }
+        console.log(numNeededToWin);
         // maybe add stuff so that its graphically nice
         // idk prolly not
 
@@ -118,6 +123,19 @@ $(document).ready(function() {
                     case 7:
                         $("#hangman").append(' leg 2 ');
                         // here is where you will write code for displaying message
+                }
+            } else {
+                correctArray.push(badge);
+                var plswork = 0;
+                for (var i = WORD.length - 1; i >= 0; i--) {
+                    for (var j = correctArray.length - 1; j >= 0; j--) {
+                       if(correctArray[j] == WORD[i]){
+                        plswork++;
+                       }
+                    }
+                }
+                if (plswork == WORD.length) {
+                    console.log("you win");
                 }
             }
             $(this).css('visibility', 'hidden');
