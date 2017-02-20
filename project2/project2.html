@@ -18,8 +18,7 @@
                 </li>
             </ul>
         </nav>
-        
-        <div id="game" >
+        <div id="game">
             <br>
             <br>
             <div class="row">
@@ -32,44 +31,44 @@
                     <br>
                 </div>
             </div>
-            <div class="row" id="hangman" style="display: none;">
+            <div class="row deadman" id="hangman" style="display: none;">
                 <div class="col-xl-1 offset-6">
                     <h1>&nbsp;|</h1>
                 </div>
             </div>
-            <div class="row" id="rope" style="display: none;">
+            <div class="row deadman" id="rope" style="display: none;">
                 <div class="col-xl-1 offset-6">
                     <h1>&nbsp;|</h1>
                 </div>
             </div>
-            <div class="row" id="head" style="display: none;">
+            <div class="row deadman" id="head" style="display: none;">
                 <div class="col-xl-1 offset-6">
                     <h1> O</h1>
                 </div>
             </div>
-            <div class="row" id="neck" style="display: none;">
+            <div class="row deadman" id="neck" style="display: none;">
                 <div class="col-xl-1 offset-6">
                     <h1>&nbsp;|</h1>
                 </div>
             </div>
-            <div class="row" id="torso" style="display: none;">
+            <div class="row deadman" id="torso" style="display: none;">
                 <div class="col-xs-1 offset-6">
                     <h1>&nbsp;/|\</h1>
                 </div>
             </div>
-            <div class="row" id="legs">
-                <div class="col-xs-1 offset-6" id="leg1"  style="display: none;">
+            <div class="row " id="legs">
+                <div class="col-xs-1 offset-6 deadman" id="leg1">
                     <h1>&nbsp;/</h1>
                 </div>
-                <div class="col-xs-1 " id="leg2"  style="display: none;">
+                <div class="col-xs-1 deadman" id="leg2" >
                     <h1>&nbsp;\</h1>
                 </div>
             </div>
-            <div class="row" >
+            <div class="row ">
                 <div class="col-xl-9 offset-3">
                     <h1 id="winlose"></h1>
                 </div>
-             </div>
+            </div>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
@@ -79,106 +78,117 @@
 <script type="text/javascript" src="./dictionary.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-    var misses = 0;
-    const WORD = randomWord();
-    // var numNeededToWin = 0;
-    var correctArray = [];
-   
-    // when you click home it should return you back to when you load the page
-
-    // when you click start game it should start the game
-        $("#welcome").hide();
-        $("#game").show();
+    var worded ;
+        var correctArray = [];
         var misses = 0;
+    reset();
+    
+    function reset() {
+        $(".reset").remove();
+        $(".gameOver").hide(); 
+        $(".mesigi").remove();
+        $(".deadman").hide();
+        correctArray = [];
+        misses = 0;
+        // when you click home it should return you back to when you load the page
+
+        // when you click start game it should start the game
+        worded = randomWord();
+
+        
         // display all the underscores
-        for (var i = 0; i < WORD.length; i++) {
-            $("#word").append('<span class="' + WORD[i] + '" >' + "_ " + '</span>');
+        for (var i = 0; i < worded.length; i++) {
+            
+            $("#word").append('<span class="' + worded[i] + ' reset" >' + "_ " + '</span>');
         }
         //show all the little letters to click on.
         for (var i = 97; i <= 122; i++) {
+
             let letter = String.fromCharCode(i);
+            
             $("#letterContainer").append('<span ' + 'id="' + letter + '" class="badge badge-default gameOver" style="background-color: black" style="position: absolute">' + "&nbsp; " + letter + " &nbsp;" + '</span> ');
-
-
         }
-        console.log(numNeededToWin);
-        // maybe add stuff so that its graphically nice
-        // idk prolly not
 
-        $(".badge").click(function() {
-            let badge = $(this).text()[2];
-            let hits = 0;
-            for (var i = WORD.length - 1; i >= 0; i--) {
-                // on correct answer    
-                if (badge == WORD[i]) {
-                    console.log('correct');
-                    // replace the underscores with answer 
-                    $("." + WORD[i]).text(WORD[i]);
-                    hits++;
-                }
+
+    }
+    // maybe add stuff so that its graphically nice
+    // idk prolly not
+
+    $(".badge").click(function() {
+        console.log("asjkdhwq");
+        let badge = $(this).text()[2];
+        let hits = 0;
+        for (var i = worded.length - 1; i >= 0; i--) {
+            // on correct answer    
+            if (badge == worded[i]) {
+                console.log('correct');
+                // replace the underscores with answer 
+                $("." + worded[i]).text(worded[i]);
+                hits++;
             }
+        }
 
-            if (hits == 0) {
-                console.log('wrong');
-                misses++;
-                $("#misses").text(misses);
-                switch (misses) {
-                    case 1:
-                        $("#hangman").show();
-                        break;
-                    case 2:
-                        $("#rope").show();
-                        break;
-                    case 3:
-                        $("#head").show();
-                        break;
-                    case 4:
-                        $("#neck").show();
-                        break;
-                    case 5:
-                        $("#torso").show();
-                        break;
-                    case 6:
-                        $("#leg1").show();
-                        break;
-                    case 7:
-                        $("#leg2").show();
-                        // here is where you will write code for displaying message
-                        lose();
-                }
-            } else {
-                correctArray.push(badge);
-                var plswork = 0;
-                for (var i = WORD.length - 1; i >= 0; i--) {
-                    for (var j = correctArray.length - 1; j >= 0; j--) {
-                       if(correctArray[j] == WORD[i]){
+        if (hits == 0) {
+            console.log('wrong');
+            misses++;
+            $("#misses").text(misses);
+            switch (misses) {
+                case 1:
+                    $("#hangman").show();
+                    break;
+                case 2:
+                    $("#rope").show();
+                    break;
+                case 3:
+                    $("#head").show();
+                    break;
+                case 4:
+                    $("#neck").show();
+                    break;
+                case 5:
+                    $("#torso").show();
+                    break;
+                case 6:
+                    $("#leg1").show();
+                    break;
+                case 7:
+                    $("#leg2").show();
+                    // here is where you will write code for displaying message
+                    lose();
+            }
+        } else {
+            correctArray.push(badge);
+            var plswork = 0;
+            for (var i = worded.length - 1; i >= 0; i--) {
+                for (var j = correctArray.length - 1; j >= 0; j--) {
+                    if (correctArray[j] == worded[i]) {
                         plswork++;
-                       }
                     }
                 }
-                if (plswork == WORD.length) {
-                    // console.log("you win");
-                    // Win condtion 
-                    win();
-                }
             }
-            $(this).css('visibility', 'hidden');
-        })
-
-        function lose(){
-            $(".gameOver").remove();
-            $("#winlose").append("YOU LOSE  the word was: " + WORD + "<br>" +"press reset to play again");
+            if (plswork == worded.length) {
+                // console.log("you win");
+                // Win condtion 
+                win();
+            }
         }
-        function win(){
-            $(".gameOver").remove();
-            $("#winlose").append("YOU WIN  Press reset to play again ");
-        }
-        $("#newGame").click(function(){
-            window.location.reload();
-        })
+        $(this).css('visibility', 'hidden');
     });
 
+    function lose() {
+        $(".gameOver").remove();
+        $("#winlose").append(' <h1 class="mesigi" > YOU LOSE  the word was:  '+ worded + "<br>" + 'press reset to play again </h1>');
+    };
 
+    function win() {
+        $(".gameOver").remove();
+        $("#winlose").append('<h1 class="mesigi" > YOU WIN  Press reset to play again  </h1>');
+    };
+
+    $("#newGame").click(function() {
+        reset();
+    });
+});
 </script>
 
 </html>
