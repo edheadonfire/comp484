@@ -34,7 +34,7 @@
                 <button id="startGame" type="button" class="btn btn bg-inverse"> <span style="color:white">Start Game</span></button>
             </div>
         </div>
-        <div id="game" style="display: none;">
+        <div id="game" >
             <br>
             <br>
             <div class="row">
@@ -47,7 +47,39 @@
                     <br>
                 </div>
             </div>
-            <div class="row" id="hangman"></div>
+            <div class="row" id="hangman" style="display: none;">
+                <div class="col-xl-1 offset-6">
+                    <h1>&nbsp;|</h1>
+                </div>
+            </div>
+            <div class="row" id="rope" style="display: none;">
+                <div class="col-xl-1 offset-6">
+                    <h1>&nbsp;|</h1>
+                </div>
+            </div>
+            <div class="row" id="head" style="display: none;">
+                <div class="col-xl-1 offset-6">
+                    <h1> O</h1>
+                </div>
+            </div>
+            <div class="row" id="neck" style="display: none;">
+                <div class="col-xl-1 offset-6">
+                    <h1>&nbsp;|</h1>
+                </div>
+            </div>
+            <div class="row" id="torso" style="display: none;">
+                <div class="col-xs-1 offset-6">
+                    <h1>&nbsp;/|\</h1>
+                </div>
+            </div>
+            <div class="row" id="legs">
+                <div class="col-xs-1 offset-6" id="leg1"  style="display: none;">
+                    <h1>&nbsp;/</h1>
+                </div>
+                <div class="col-xs-1 " id="leg2"  style="display: none;">
+                    <h1>&nbsp;\</h1>
+                </div>
+            </div>
             <div class="row" >
                 <div class="col-xl-9 offset-3">
                     <h1 id="winlose"></h1>
@@ -66,7 +98,7 @@ $(document).ready(function() {
     const WORD = randomWord();
     var numNeededToWin = 0;
     var correctArray = [];
-    console.log(WORD);
+   
     // when you click home it should return you back to when you load the page
 
     // when you click start game it should start the game
@@ -108,25 +140,25 @@ $(document).ready(function() {
                 $("#misses").text(misses);
                 switch (misses) {
                     case 1:
-                        $("#hangman").append('rope ');
+                        $("#hangman").show();
                         break;
                     case 2:
-                        $("#hangman").append('rope ');
+                        $("#rope").show();
                         break;
                     case 3:
-                        $("#hangman").append('head ');
+                        $("#head").show();
                         break;
                     case 4:
-                        $("#hangman").append('neck ');
+                        $("#neck").show();
                         break;
                     case 5:
-                        $("#hangman").append('torso ');
+                        $("#torso").show();
                         break;
                     case 6:
-                        $("#hangman").append(' leg 1 ');
+                        $("#leg1").show();
                         break;
                     case 7:
-                        $("#hangman").append(' leg 2 ');
+                        $("#leg2").show();
                         // here is where you will write code for displaying message
                         lose();
                 }
@@ -157,6 +189,9 @@ $(document).ready(function() {
             $(".gameOver").remove();
             $("#winlose").append("YOU WIN  please new game to play again ");
         }
+        $("#newGame").click(function(){
+            window.location.reload();
+        })
     });
 
 });
