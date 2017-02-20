@@ -37,17 +37,16 @@
         <div id="game" style="display: none;">
             <br>
             <br>
-
             <div class="row">
                 <div class="col-xl-5 offset-1">
                     <h1>Take a guess</h1>
                     <h2 id="word">Word: </h2>
                 </div>
                 <div id="letterContainer" class="col-xl-5">
-            <br>
-                	
+                    <br>
                 </div>
             </div>
+            <div class="row" id="hangman"></div>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
@@ -57,7 +56,7 @@
 <script type="text/javascript" src="./dictionary.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-    //do jQuery
+    var misses = 0;
     const WORD = randomWord();
     console.log(WORD);
     // when you click home it should return you back to when you load the page
@@ -69,28 +68,60 @@ $(document).ready(function() {
     $("#startGame").click(function() {
         $("#welcome").hide();
         $("#game").show();
+        var misses = 0;
         // display all the underscores
         for (var i = 0; i < WORD.length; i++) {
             $("#word").append('<span class="' + WORD[i] + '" >' + "_ " + '</span>');
         }
         //show all the little letters to click on.
-        for (var i = 97; i <=122; i++) {
-        	let letter = String.fromCharCode(i);
-       		$("#letterContainer").append( '<span '+ 'id="'+letter + '" class="badge badge-default " style="background-color: black" style="position: absolute">' +"&nbsp; "+ letter +" &nbsp;"+ '</span> ');
+        for (var i = 97; i <= 122; i++) {
+            let letter = String.fromCharCode(i);
+            $("#letterContainer").append('<span ' + 'id="' + letter + '" class="badge badge-default " style="background-color: black" style="position: absolute">' + "&nbsp; " + letter + " &nbsp;" + '</span> ');
         }
         // maybe add stuff so that its graphically nice
         // idk prolly not
-        $(".badge").click(function(){
-            let badge = $(this).text()[2];
-            for (var i = WORD.length; i >= 0; i--) {
-                if (badge == WORD[i]) {
-                    console.log('poop');
-                    $("." + WORD[i]).text(WORD[i] );
-                }
 
+        $(".badge").click(function() {
+            let badge = $(this).text()[2];
+            let hits = 0;
+            for (var i = WORD.length - 1; i >= 0; i--) {
+                // on correct answer    
+                if (badge == WORD[i]) {
+                    console.log('correct');
+                    // replace the underscores with answer 
+                    $("." + WORD[i]).text(WORD[i]);
+                    hits++;
+                }
             }
-            
-            $(this).css('visibility','hidden');
+
+            if (hits == 0) {
+                console.log('wrong');
+                misses++;
+                switch (misses) {
+                    case 1:
+                        $("#hangman").append('rope ');
+                        break;
+                    case 2:
+                        $("#hangman").append('rope ');
+                        break;
+                    case 3:
+                        $("#hangman").append('head ');
+                        break;
+                    case 4:
+                        $("#hangman").append('neck ');
+                        break;
+                    case 5:
+                        $("#hangman").append('torso ');
+                        break;
+                    case 6:
+                        $("#hangman").append(' leg 1 ');
+                        break;
+                    case 7:
+                        $("#hangman").append(' leg 2 ');
+                        // here is where you will write code for displaying message
+                }
+            }
+            $(this).css('visibility', 'hidden');
         })
     });
 
