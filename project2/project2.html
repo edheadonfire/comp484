@@ -31,27 +31,27 @@
                     <br>
                 </div>
             </div>
-            <div class="row deadman" id="hangman" style="display: none;">
+            <div class="row deadman" id="hangman">
                 <div class="col-xl-1 offset-6">
                     <h1>&nbsp;|</h1>
                 </div>
             </div>
-            <div class="row deadman" id="rope" style="display: none;">
+            <div class="row deadman" id="rope">
                 <div class="col-xl-1 offset-6">
                     <h1>&nbsp;|</h1>
                 </div>
             </div>
-            <div class="row deadman" id="head" style="display: none;">
+            <div class="row deadman" id="head">
                 <div class="col-xl-1 offset-6">
                     <h1> O</h1>
                 </div>
             </div>
-            <div class="row deadman" id="neck" style="display: none;">
+            <div class="row deadman" id="neck">
                 <div class="col-xl-1 offset-6">
                     <h1>&nbsp;|</h1>
                 </div>
             </div>
-            <div class="row deadman" id="torso" style="display: none;">
+            <div class="row deadman" id="torso">
                 <div class="col-xs-1 offset-6">
                     <h1>&nbsp;/|\</h1>
                 </div>
@@ -60,7 +60,7 @@
                 <div class="col-xs-1 offset-6 deadman" id="leg1">
                     <h1>&nbsp;/</h1>
                 </div>
-                <div class="col-xs-1 deadman" id="leg2" >
+                <div class="col-xs-1 deadman" id="leg2">
                     <h1>&nbsp;\</h1>
                 </div>
             </div>
@@ -78,59 +78,40 @@
 <script type="text/javascript" src="./dictionary.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
-    var worded ;
-        var correctArray = [];
-        var misses = 0;
+    var worded;
+    var correctArray = [];
+    var misses = 0;
     reset();
-        for (var i = 65; i <= 90; i++) {
+    for (var i = 65; i <= 90; i++) {
+        let letter = String.fromCharCode(i);
+        $("#letterContainer").append('<span ' + 'id="' + letter + '" class="badge badge-default gameOver" style="background-color: black" style="position: absolute">' + "&nbsp; " + letter + " &nbsp;" + '</span> ');
+    }
 
-            let letter = String.fromCharCode(i);
-            
-            $("#letterContainer").append('<span ' + 'id="' + letter + '" class="badge badge-default gameOver" style="background-color: black" style="position: absolute">' + "&nbsp; " + letter + " &nbsp;" + '</span> ');
-        }
-    
     function reset() {
-        $(".reset").remove(); 
+        $(".reset").remove();
         $(".gameOver").css('visibility', 'visible');
         $(".mesigi").remove();
         $(".deadman").hide();
         $("#misses").text(0);
         correctArray = [];
         misses = 0;
-        // when you click home it should return you back to when you load the page
-
-        // when you click start game it should start the game
         worded = randomWord();
-
-        
-        // display all the underscores
         for (var i = 0; i < worded.length; i++) {
-            
             $("#word").append('<span class="' + worded[i] + ' reset" >' + "_ " + '</span>');
         }
-        //show all the little letters to click on.
-
-
     }
-    // maybe add stuff so that its graphically nice
-    // idk prolly not
-
     $(".badge").click(function() {
-        console.log("asjkdhwq");
         let badge = $(this).text()[2];
         let hits = 0;
         for (var i = worded.length - 1; i >= 0; i--) {
             // on correct answer    
             if (badge == worded[i]) {
-                console.log('correct');
                 // replace the underscores with answer 
                 $("." + worded[i]).text(worded[i]);
                 hits++;
             }
         }
-
         if (hits == 0) {
-            console.log('wrong');
             misses++;
             $("#misses").text(misses);
             switch (misses) {
@@ -154,7 +135,6 @@ $(document).ready(function() {
                     break;
                 case 7:
                     $("#leg2").show();
-                    // here is where you will write code for displaying message
                     lose();
             }
         } else {
@@ -168,8 +148,6 @@ $(document).ready(function() {
                 }
             }
             if (plswork == worded.length) {
-                // console.log("you win");
-                // Win condtion 
                 win();
             }
         }
@@ -178,17 +156,14 @@ $(document).ready(function() {
 
     function lose() {
         $(".gameOver").css('visibility', 'hidden');
-        $("#winlose").append(' <h1 class="mesigi" > YOU LOSE  the word was:  '+ worded + "<br>" + 'press reset to play again </h1>');
+        $("#winlose").append(' <h1 class="mesigi" > YOU LOSE  the word was:  ' + worded + "<br>" + 'press reset to play again </h1>');
     };
 
     function win() {
         $(".gameOver").css('visibility', 'hidden');
         $("#winlose").append('<h1 class="mesigi" > YOU WIN  Press reset to play again  </h1>');
     };
-
-    $("#newGame").click(function() {
-        reset();
-    });
+    $("#newGame").click(reset);
 });
 </script>
 
