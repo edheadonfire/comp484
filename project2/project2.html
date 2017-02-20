@@ -48,6 +48,11 @@
                 </div>
             </div>
             <div class="row" id="hangman"></div>
+            <div class="row" >
+                <div class="col-xl-9 offset-3">
+                    <h1 id="winlose"></h1>
+                </div>
+             </div>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
@@ -76,7 +81,7 @@ $(document).ready(function() {
         //show all the little letters to click on.
         for (var i = 97; i <= 122; i++) {
             let letter = String.fromCharCode(i);
-            $("#letterContainer").append('<span ' + 'id="' + letter + '" class="badge badge-default " style="background-color: black" style="position: absolute">' + "&nbsp; " + letter + " &nbsp;" + '</span> ');
+            $("#letterContainer").append('<span ' + 'id="' + letter + '" class="badge badge-default gameOver" style="background-color: black" style="position: absolute">' + "&nbsp; " + letter + " &nbsp;" + '</span> ');
 
 
         }
@@ -123,6 +128,7 @@ $(document).ready(function() {
                     case 7:
                         $("#hangman").append(' leg 2 ');
                         // here is where you will write code for displaying message
+                        lose();
                 }
             } else {
                 correctArray.push(badge);
@@ -137,10 +143,20 @@ $(document).ready(function() {
                 if (plswork == WORD.length) {
                     // console.log("you win");
                     // Win condtion 
+                    win();
                 }
             }
             $(this).css('visibility', 'hidden');
         })
+
+        function lose(){
+            $(".gameOver").remove();
+            $("#winlose").append("YOU LOSE  the word was: " + WORD);
+        }
+        function win(){
+            $(".gameOver").remove();
+            $("#winlose").append("YOU WIN  please new game to play again ");
+        }
     });
 
 });
