@@ -14,26 +14,11 @@
             <a id="home" class="navbar-brand" href="#">Hangmanonfire</a>
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" id="newGame" href="#">New Game?</a>
+                    <a class="nav-link" id="newGame" href="#">Reset</a>
                 </li>
             </ul>
         </nav>
-        <div id="welcome">
-            <br>
-            <br>
-            <br>
-            <div class="row ">
-                <div class="col-xl-6 offset-3">
-                    <h1>Welcome to Hangmanonfire</h1>
-                </div>
-            </div>
-            <br>
-            <br>
-            <div class="row ">
-                <div class="col-xl-2 offset-3"></div>
-                <button id="startGame" type="button" class="btn btn bg-inverse"> <span style="color:white">Start Game</span></button>
-            </div>
-        </div>
+        
         <div id="game" >
             <br>
             <br>
@@ -96,13 +81,12 @@
 $(document).ready(function() {
     var misses = 0;
     const WORD = randomWord();
-    var numNeededToWin = 0;
+    // var numNeededToWin = 0;
     var correctArray = [];
    
     // when you click home it should return you back to when you load the page
 
     // when you click start game it should start the game
-    $("#startGame").click(function() {
         $("#welcome").hide();
         $("#game").show();
         var misses = 0;
@@ -183,18 +167,18 @@ $(document).ready(function() {
 
         function lose(){
             $(".gameOver").remove();
-            $("#winlose").append("YOU LOSE  the word was: " + WORD);
+            $("#winlose").append("YOU LOSE  the word was: " + WORD + "<br>" +"press reset to play again");
         }
         function win(){
             $(".gameOver").remove();
-            $("#winlose").append("YOU WIN  please new game to play again ");
+            $("#winlose").append("YOU WIN  Press reset to play again ");
         }
         $("#newGame").click(function(){
             window.location.reload();
         })
     });
 
-});
+
 </script>
 
 </html>
