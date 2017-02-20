@@ -95,6 +95,7 @@ $(document).ready(function() {
             if (hits == 0) {
                 console.log('wrong');
                 misses++;
+                $("#misses").text(misses);
                 switch (misses) {
                     case 1:
                         $("#hangman").append('rope ');
