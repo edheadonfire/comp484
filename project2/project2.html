@@ -101,7 +101,7 @@ $(document).ready(function() {
         }
     }
     $(".badge").click(function() {
-        let badge = $(this).text()[2];
+        let badge = $(this).text()[2].toLowerCase();
         let hits = 0;
         for (var i = worded.length - 1; i >= 0; i--) {
             // on correct answer    
